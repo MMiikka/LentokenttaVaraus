@@ -271,8 +271,8 @@ public class Ohjelma {
 }
 	/**
 	 * Metodi tarkistaa varauksen ohjelman alussa.
-	 * @param f
-	 * @param id
+	 * @param f Tiedosto, jossa varaus on
+	 * @param id 
 	 * @return Palauttaa listan varauksen sisältämistä asioista merkkijonoina.
 	 * @throws IOException
 	 */
