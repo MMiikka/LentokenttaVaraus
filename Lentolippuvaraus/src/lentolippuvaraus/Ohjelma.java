@@ -9,11 +9,18 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
+/**
+ * 
+ * @author jonmer
+ *
+ */
 public class Ohjelma {
 	
 	
-	
+	/**
+	 * Päävalikko-metodi on ensimmäinen metodi, joka aloittaa vuorovaikutuksen käyttäjän kanssa ohjelman käynnistyessä.
+	 * Metodin aikana luojaan käyttäjästä asiakas-olio.
+	 */
 	public void paavalikko() {
 		File f =  new File("varaus.txt");
 		Scanner s = new Scanner(System.in);
@@ -49,7 +56,13 @@ public class Ohjelma {
 		}
 		
 	}
-	
+	/**
+	 * Käynnistää varausjärjestelmäohjelman varauksen luonti osion.
+	 * Ohjelma käynnistetään vasta kun asiakas-olio on luotu käyttäjän syötteestä.
+	 * Tämän hetkisessä versiossa myös mahdolliset lentokoneet tuodaan ohjelmaan tässä vaiheessa.
+	 * Metodin tarkoituksena, on mahdollistaa paikan varaus lentokoneista.
+	 * @param nimi
+	 */
 	public void kaynnista(Asiakas nimi) {
 		
 		//luodaan koneet
@@ -81,7 +94,7 @@ public class Ohjelma {
 		System.out.println(" 1 = Ruotsi, 2 = Norja, 3 = Espanja");
 		System.out.println("Vapaita paikkoja on koneissa, jotka lentävät: ");
 
-		String numero = kohdemaa(s);
+		String numero = s.nextLine();
 		
 		Maat kohdemaa = null;
 		
@@ -109,7 +122,12 @@ public class Ohjelma {
 		}
 		s.close();
 	}
-		
+		/**
+		 * KohdeMaa-metodi aloittaa varausprosessin sille lentokoneelle, joka lentää valittuun kohdemaahan. Metodi tarkistaa onko koneessa vapaita paikkoja ja tulostaa ne käyttäjälle.
+		 * Tämän jälkeen käyttäjä valitsee paikkansa koneesta.
+		 * @param kone,	kone johon varaus tehdään
+		 * @param nimi, asiakas joka tekee varauksen
+		 */
 	public void kohdeMaa(Lentokone kone, Asiakas nimi) {
 		
 			Scanner s = new Scanner(System.in);
@@ -196,7 +214,10 @@ public class Ohjelma {
 
 				
 		}
-
+/**
+ * Valikko-metodilla tehdään valinta uuden varauksen teosta ko. asiakkaalle.
+ * @param asiakas
+ */
 	public void valikko(Asiakas asiakas) {
 			System.out.println("Haluatko jatkaa varauksen tekoon? 1: kyllä, 0: Ei(ohjelma päättyy)");
 			Scanner s = new Scanner(System.in);
@@ -215,11 +236,14 @@ public class Ohjelma {
 			}
 		}
 	
-	public String kohdemaa(Scanner s){
-		String valinta = s.nextLine();
-		return valinta;
-	}
-
+/**
+ * luoAsiakas() metodissa luodaan asiakas käyttäjän antamasta nimi-syötteestä.
+ * Metodin aikana myös annetaan asiakkaalle ID, sen perusteella onko asiakkaalla aijempaa varausta.
+ * Jos varaus löytyy annetaan asiakkaalle se ID, joka varauksessa on. Muutoin asiakkaalle luodaan uusi ID.
+ * @param s	parametrina on käyttäjän syöte.
+ * @return Palauttaa asiakas olion.
+ * @throws IOException
+ */
 	public Asiakas luoAsiakas(Scanner s) throws IOException {
 		File f = new File("varaus.txt");
 		List<String> lista = new ArrayList<>();
@@ -245,7 +269,13 @@ public class Ohjelma {
 		
 	return asiakas;
 }
-	
+	/**
+	 * Metodi tarkistaa varauksen ohjelman alussa.
+	 * @param f
+	 * @param id
+	 * @return Palauttaa listan varauksen sisältämistä asioista merkkijonoina.
+	 * @throws IOException
+	 */
 	public List<String> tarkistaVaraus(File f,String id) throws IOException {
 
 		List<String> rivit = new ArrayList<>();
@@ -258,7 +288,11 @@ public class Ohjelma {
 		
 		return rivit;
 	}
-	
+	/**
+	 * Kirjoittaa uuden tekstitiedoston, joka sisältää asiakkaan varauksen. Metodin parametriksi annetaan luotu varaus-olio.
+	 * @param varaus
+	 * @throws IOException
+	 */
 	public void kirjoitaTiedosto(Varaus varaus) throws IOException {
 		 File f = new File("varaus.txt");
 		FileWriter fw = new FileWriter(f);

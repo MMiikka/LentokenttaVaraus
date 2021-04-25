@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-
+/**
+ * Lentokenttävarauksen pääluokka, joka käynnistää ohjelman.
+ * @param args
+ */
 	public static void main(String[] args) {
 
 		Ohjelma m = new Ohjelma();
