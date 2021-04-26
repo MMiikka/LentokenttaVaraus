@@ -18,6 +18,13 @@ public class Paikka {
 		this.numero = numero;
 	}
 	/**
+	 * Metodilla voidaan kysellä kyseisen paikan omistajaa.
+	 * @return Asiakas, palauttaa kyseisen paikan asiakkaan
+	 */
+	public Asiakas annaAsiakas() {
+		return asiakas;
+	}
+	/**
 	 * asetaAsiakas()-metodissa asetetaan paikkaan asiakas.
 	 * @param asiakas, tässä tapauksessa ohjelman käyttäjä.
 	 * @throws Exception aiheuttaa poikkeuksen, jos asiakasta ei ole luotu.
@@ -29,6 +36,7 @@ public class Paikka {
 
 		}
 		vapaa = false;
+		
 	}
 	/**
 	 * Metodi palauttaa koneen vapaat paikat.

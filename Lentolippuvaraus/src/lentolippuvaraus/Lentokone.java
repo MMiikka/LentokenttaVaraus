@@ -42,6 +42,14 @@ public class Lentokone {
 		return maa;
 	}
 	/**
+	 * Metodia käytetään silloin kun pitää vertailla koneiden malleja keskenään
+	 * @return malli, palauttaa koneen mallin
+	 */
+	public String annaMalli() {
+		return this.malli;
+	}
+	
+	/**
 	 * toString() metodin ylikirjoitus, joka palauttaa koneen mallin merkkijonona
 	 * @return malli, merkkijonona
 	 */

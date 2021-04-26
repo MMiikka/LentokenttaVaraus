@@ -25,20 +25,22 @@ public class Ohjelma {
 		File f =  new File("varaus.txt");
 		Scanner s = new Scanner(System.in);
 		System.out.println("Hei, tervetuloa äkkilähtöjen varausjärjestelmään! \n Syötä etu- ja sukunimesi");
+		
 		try {
-		Asiakas nimi = luoAsiakas(s);
+			Asiakas nimi = luoAsiakas(s);
 	
-		System.out.println("Hei, " + nimi.annaNimi()+ "! Asiakas ID:si on: " + nimi.annaID() + " \n Käytä tätä ID:tä ku haluat tarkastella varaustasi.");
-		System.out.println();
-		System.out.println("Haluatko tarkastella varauksiasi (0) vai luoda uuden varauksen? (1)");
+			System.out.println("Hei, " + nimi.annaNimi()+ "! Asiakas ID:si on: " + nimi.annaID() + " \n Käytä tätä ID:tä ku haluat tarkastella varaustasi.");
+			System.out.println();
+			System.out.println("Haluatko tarkastella varauksiasi (0) vai luoda uuden varauksen? (1)");
 
 		try {
-		if(s.nextInt() == 0) {
-			List<String> varaukset = tarkistaVaraus(f,nimi.annaID());
+			if(s.nextInt() == 0) {
+				List<String> varaukset = tarkistaVaraus(f,nimi.annaID());
 			if(!varaukset.isEmpty()) {
-			System.out.println("Tässä on aikaisempi varauksesi: ID, nimi, paikka, koneen malli ja kohdemaa.");
-			System.out.println(varaukset.toString());
+				System.out.println("Tässä on aikaisempi varauksesi: ID, nimi, paikka, koneen malli ja kohdemaa.");
+				System.out.println(varaukset.toString());
 			}else {System.out.println("Varauksia ei löytynyt!");}
+			
 			valikko(nimi);
 			
 		}else{ 
@@ -49,6 +51,7 @@ public class Ohjelma {
 		}
 		
 		s.close();
+		
 		}catch(Exception e) {
 			
 			System.err.print("Kirjoita sekä etunimi ja sukunimi");
@@ -73,19 +76,42 @@ public class Ohjelma {
 			Paikka p = new Paikka(r.nextBoolean(),i);
 			paikat.add(p);
 
+		
 		}
+		/*
 		for(int i = 0;i<paikat.size();i++) {
 			paikat.get(random).asetaVarattu(r.nextBoolean());
 			
 		}
-		
+		*/
 		Lentokone ruotsi = new Lentokone(paikat,Maat.RUOTSI);
-		ruotsi.asetaMalli("Boaeng A57");
+		ruotsi.asetaMalli("Boaeng-A57");
 		Lentokone norja = new Lentokone(paikat, Maat.NORJA);
-		norja.asetaMalli("SAAP B45");
+		norja.asetaMalli("SAAP-B45");
 		Lentokone espanja = new Lentokone(paikat, Maat.ESPANJA);
-		espanja.asetaMalli("VOLGSFLYGEN WG99");
+		espanja.asetaMalli("VOLGSFLYGEN-WG99");
 		
+		List<Lentokone> koneet = new ArrayList<>();
+		koneet.add(ruotsi);
+		koneet.add(norja);
+		koneet.add(espanja);
+		/*
+		File f = new File("varaus.txt");
+		Varaus v = new Varaus();
+		try {
+		String[] varaustiedot = v.lueVarauksenTiedot(f);
+		int numero = Integer.parseInt(varaustiedot[2]);
+		for(Lentokone lk : koneet) {
+			if(varaustiedot[4] == lk.annaMalli()){
+				Paikka p = v.lueVarausTiedostosta(f,nimi,numero);
+				p.asetaVarattu(false);
+				lk.annaPaikat().set(numero,p);
+			}
+		}
+		}catch(Exception e) {
+			System.out.println("Varauksien luku ei onnistunu!");
+		}
+	*/
 		
 		System.out.println(" Hei, tervetuloa varaamaan lentosi! ");
 		Scanner s = new Scanner(System.in);
@@ -129,8 +155,17 @@ public class Ohjelma {
 		 * @param nimi, asiakas joka tekee varauksen
 		 */
 	public void kohdeMaa(Lentokone kone, Asiakas nimi) {
-		
-			Scanner s = new Scanner(System.in);
+				try {
+				File f = new File("varaus.txt");
+				Varaus va = new Varaus();
+				String[] varauksenTiedot = va.lueVarauksenTiedot(f);
+				int numero = Integer.parseInt(varauksenTiedot[2]);
+				Paikka p = va.lueVarausTiedostosta(f, nimi, numero);
+				kone.annaPaikat().set(numero -1 , p);
+				}catch(Exception e) {
+					System.out.println("Varauksen haku ei onnistunut!");
+				}
+				Scanner s = new Scanner(System.in);
 				System.out.println("Tässä kyseisen lennon vapaat paikat");
 				
 					for(int i = 0; i< kone.annaPaikat().size();i++) {
@@ -142,9 +177,10 @@ public class Ohjelma {
 						}
 					int vapaa =	kone.annaPaikat().get(i).annaVapaatPaikat();
 					System.out.print(vapaa);
-				if(i != kone.annaPaikat().size() -1) {
-					System.out.print(",");
-				}
+						if(i != kone.annaPaikat().size() -1) {
+							System.out.print(",");
+						}
+						
 					}
 					System.out.println();
 				
@@ -276,6 +312,7 @@ public class Ohjelma {
 	 * @return Palauttaa listan varauksen sisältämistä asioista merkkijonoina.
 	 * @throws IOException
 	 */
+	
 	public List<String> tarkistaVaraus(File f,String id) throws IOException {
 
 		List<String> rivit = new ArrayList<>();

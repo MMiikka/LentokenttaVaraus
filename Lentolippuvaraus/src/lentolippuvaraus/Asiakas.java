@@ -37,6 +37,7 @@ public class Asiakas {
 	  this.paikka = paikka;
   }
   	/**
+  	 * Metodi palauttaa asiakkan paikan
   	 * @return paikka, palauttaa paikan
   	 */
 	public Paikka annaPaikka() {

@@ -50,26 +50,49 @@ public class Varaus{
 	public String annaVarauksenID(Asiakas asiakas) {
 		return asiakas.annaID();
 	}
-	/**
-	 * Lukee varauksen tiedostosta.
-	 * @param f, tiedosto, jossa varaus on
-	 * @return Listan varauksen tiedoista.
-	 * @throws IOException
-	 */
-	public List<String> lueVaraus(File f) throws IOException {
-		List<String> rivit = new ArrayList<>();
-		rivit = Files.readAllLines(f.toPath());
-		String[]tieto = new String[rivit.size()];
-		for(String s : rivit) {
-			tieto = s.split(",");
-			System.out.println(tieto[1]);
-		}
-		
-	rivit.add(tieto[1]);
 
 	
-			return rivit;
+	/**
+	 * Metodi, joka helpottaa varauksen perusteella kyseisen koneen tunnistamista
+	 * @param f tiedosto, josta varaus luetaan
+	 * @return paluattaa koneen mallin merkkijonona
+	 * @throws Exception
+	 */
+	public String[] lueVarauksenTiedot(File f) throws Exception{
+		List<String> varaus = new ArrayList<>();
+		varaus = Files.readAllLines(f.toPath());
+		String[] solut = new String[6];
+		for(String s : varaus) {
+			solut = s.split(",");
+		}
+		
+		return solut;
 	}
+	/**
+	 * Metodi, jolla luetaan vanhoista varauksista paikat koneeseen.
+	 * @param f	tiedosto, josta varaus luetaan
+	 * @return Asiakas, palauttaa asiakkaan joka asetataan koneeseen.
+	 * @throws Exception
+	 */
+	public Paikka lueVarausTiedostosta(File f,Asiakas a, int numero) throws Exception {
+		List<String> varaus = new ArrayList<>();
+		varaus = Files.readAllLines(f.toPath());
+		String[] solut = new String[6];
+		for(String s : varaus) {
+			solut = s.split(",");
+		}
+		
+		Paikka p = new Paikka(false,numero);
+		
+		
+		p.asetaAsiakas(a);
+		a.asetaPaikka(p);
+		
+	
+		return p;
+	}
+	
+	
 	/**
 	 * Ylikirjoittaa toString() metodin, jolla palautetaan varaus-olion tiedot merkkijonona.
 	 */
