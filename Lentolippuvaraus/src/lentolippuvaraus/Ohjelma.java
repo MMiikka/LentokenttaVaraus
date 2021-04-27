@@ -20,25 +20,34 @@ public class Ohjelma {
 	/**
 	 * Päävalikko-metodi on ensimmäinen metodi, joka aloittaa vuorovaikutuksen käyttäjän kanssa ohjelman käynnistyessä.
 	 * Metodin aikana luojaan käyttäjästä asiakas-olio.
+	 * Voit tarkistella varauksia tai siirtyä uuden varauksen luontiin.
 	 */
 	public void paavalikko() {
+		boolean onNimi= false;
+		do {
 		File f =  new File("varaus.txt");
 		Scanner s = new Scanner(System.in);
+		//do {
+			
 		System.out.println("Hei, tervetuloa äkkilähtöjen varausjärjestelmään! \n Syötä etu- ja sukunimesi");
 		
 		try {
 			Asiakas nimi = luoAsiakas(s);
 	
-			System.out.println("Hei, " + nimi.annaNimi()+ "! Asiakas ID:si on: " + nimi.annaID() + " \n Käytä tätä ID:tä ku haluat tarkastella varaustasi.");
+			System.out.println("Hei, " + nimi.annaNimi()+ "! Asiakas ID:si on: " + nimi.annaID());
+			onNimi = true;
 			System.out.println();
 			System.out.println("Haluatko tarkastella varauksiasi (0) vai luoda uuden varauksen? (1)");
 
 		try {
 			if(s.nextInt() == 0) {
 				List<String> varaukset = tarkistaVaraus(f,nimi.annaID());
+			
+				
 			if(!varaukset.isEmpty()) {
 				System.out.println("Tässä on aikaisempi varauksesi: ID, nimi, paikka, koneen malli ja kohdemaa.");
 				System.out.println(varaukset.toString());
+				
 			}else {System.out.println("Varauksia ei löytynyt!");}
 			
 			valikko(nimi);
@@ -54,10 +63,10 @@ public class Ohjelma {
 		
 		}catch(Exception e) {
 			
-			System.err.print("Kirjoita sekä etunimi ja sukunimi");
-			paavalikko();
+			System.err.println("Kirjoita sekä etunimi ja sukunimi");
+			onNimi = false;
 		}
-		
+		}while(onNimi == false);
 	}
 	/**
 	 * Käynnistää varausjärjestelmäohjelman varauksen luonti osion.
@@ -78,12 +87,7 @@ public class Ohjelma {
 
 		
 		}
-		/*
-		for(int i = 0;i<paikat.size();i++) {
-			paikat.get(random).asetaVarattu(r.nextBoolean());
-			
-		}
-		*/
+	
 		Lentokone ruotsi = new Lentokone(paikat,Maat.RUOTSI);
 		ruotsi.asetaMalli("Boaeng-A57");
 		Lentokone norja = new Lentokone(paikat, Maat.NORJA);
@@ -95,30 +99,14 @@ public class Ohjelma {
 		koneet.add(ruotsi);
 		koneet.add(norja);
 		koneet.add(espanja);
-		/*
-		File f = new File("varaus.txt");
-		Varaus v = new Varaus();
-		try {
-		String[] varaustiedot = v.lueVarauksenTiedot(f);
-		int numero = Integer.parseInt(varaustiedot[2]);
-		for(Lentokone lk : koneet) {
-			if(varaustiedot[4] == lk.annaMalli()){
-				Paikka p = v.lueVarausTiedostosta(f,nimi,numero);
-				p.asetaVarattu(false);
-				lk.annaPaikat().set(numero,p);
-			}
-		}
-		}catch(Exception e) {
-			System.out.println("Varauksien luku ei onnistunu!");
-		}
-	*/
+	
 		
 		System.out.println(" Hei, tervetuloa varaamaan lentosi! ");
 		Scanner s = new Scanner(System.in);
 		
 		System.out.println("Mikä on määränpääsi?  \n Vaihtoehtosi ovat tässä");
 		System.out.println(" 1 = Ruotsi, 2 = Norja, 3 = Espanja");
-		System.out.println("Vapaita paikkoja on koneissa, jotka lentävät: ");
+		
 
 		String numero = s.nextLine();
 		
@@ -188,9 +176,11 @@ public class Ohjelma {
 				System.out.println("Valitse vapaa paikka kirjoittamalla paikan numero. \n Paikka, jossa on 0 on varattu ");
 				
 			
+				boolean paikanVaraus = false;
 				do {
+					
 					try {
-						
+					
 				int paikka = s.nextInt() - 1 ;
 			
 				
@@ -214,9 +204,11 @@ public class Ohjelma {
 							s.close();
 							
 							System.out.println("Varasit paikan " + (paikka + 1) + " koneeseen, joka lähtee tänään kohteeseen: " + kone.annaMaa());
-				
+							paikanVaraus = true;
+							
 					}else {
 						System.out.println("Paikka ei ole vapaana, valitse uudelleen!");
+						
 					}
 					
 				
@@ -226,10 +218,10 @@ public class Ohjelma {
 				}
 
 			
-				}while(nimi.onkoPaikka());
+				}while(paikanVaraus == false);
 					
 				
-				System.out.println("Tässä vielä vapaat paikat");
+				System.out.println("Tässä vielä vapaat paikat, kiitos varauksestasi!");
 				for(int i = 0; i< kone.annaPaikat().size();i++) {
 					if(i == 2 || i == 6 || i == 10 || i == 14 || i== 18) {
 						System.out.print("  ");
@@ -244,8 +236,9 @@ public class Ohjelma {
 					System.out.print(",");
 				}
 				
-				}				
-				
+			
+				}
+		
 				
 
 				
@@ -255,7 +248,9 @@ public class Ohjelma {
  * @param asiakas
  */
 	public void valikko(Asiakas asiakas) {
-			System.out.println("Haluatko jatkaa varauksen tekoon? 1: kyllä, 0: Ei(ohjelma päättyy)");
+			System.out.println("Haluatko jatkaa varauksen tekoon? 1: kyllä, 0: Ei(ohjelma päättyy");
+		
+			
 			Scanner s = new Scanner(System.in);
 			String valinta = s.nextLine();
 			
@@ -337,6 +332,9 @@ public class Ohjelma {
 		 fw.flush();
 		 fw.close();
 		}
+	
+	
+
 
 }
 

@@ -1,6 +1,7 @@
 package lentolippuvaraus;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -92,6 +93,7 @@ public class Varaus{
 		return p;
 	}
 	
+
 	
 	/**
 	 * Ylikirjoittaa toString() metodin, jolla palautetaan varaus-olion tiedot merkkijonona.

@@ -22,6 +22,12 @@ public class Asiakas {
 		
 	}
 	/**
+	 * Metodi poistaa asiakkaalta paikan.
+	 */
+	public void poistaPaikka() {
+		this.paikka = null;
+	}
+	/**
 	 * annaNimi() metodissa luodaan asiakkaalle koko nimi tulostusta varten.
 	 * @return palauttaa asiakkaan etunimen ja sukunimen
 	 */
@@ -48,7 +54,7 @@ public class Asiakas {
 	 * @return totuusarvo paikan ollessa varattu tai vapaa.
 	 */
   	public boolean onkoPaikka() {
-	  if(this.paikka != null) {
+	  if(this.paikka == null) {
 		  return false;
 	  }else {return true;
 	  }
