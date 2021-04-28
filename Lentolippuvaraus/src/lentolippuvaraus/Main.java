@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Main {
 /**
  * Lentokenttävarauksen pääluokka, joka käynnistää ohjelman.
- * @param args
+ * @param args, main metodin taulukko-paramteri
  */
 	public static void main(String[] args) {
 

@@ -60,7 +60,7 @@ public class Varaus{
 	 * Metodi, joka helpottaa varauksen perusteella kyseisen koneen tunnistamista
 	 * @param f tiedosto, josta varaus luetaan
 	 * @return palauttaa koneen mallin merkkijonona
-	 * @throws Exception, jos tiedoston luku epäonnistuu
+	 * @throws Exception , jos tiedoston luku epäonnistuu
 	 */
 	public String[] lueVarauksenTiedot(File f) throws Exception{
 		List<String> varaus = new ArrayList<>();
@@ -75,8 +75,10 @@ public class Varaus{
 	/**
 	 * Metodi, jolla luetaan vanhoista varauksista paikat koneeseen.
 	 * @param f	tiedosto, josta varaus luetaan
-	 * @return Asiakas, palauttaa asiakkaan joka asetataan koneeseen.
-	 * @throws Exception, jos tiedoston luku epäonnistuu
+	 * @param a Asiakas, eli käyttäjä
+	 * @param numero, ID:n numero, jota käytetään Paikka-olion luontiin
+	 * @return Paikka, palauttaa Paikan 
+	 * @throws Exception , jos tiedoston luku epäonnistuu
 	 */
 	public Paikka lueVarausTiedostosta(File f,Asiakas a, int numero) throws Exception {
 		List<String> varaus = new ArrayList<>();
@@ -97,7 +99,7 @@ public class Varaus{
 	}
 	/**
 	 * Metodin avulla poistetaan aikaisempi varaus. Tämä metodi tyhjentää ohjelman mukana tulevan varaus.txt-tiedoston.
-	 * @throws IOException Jos varaus epäonnistuu
+	 * @throws IOException , Jos varauksen poisto epäonnistuu
 	 */
 	public void poistaVaraus() throws IOException {
 		FileWriter fw = new FileWriter(f);
