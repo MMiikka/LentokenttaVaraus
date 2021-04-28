@@ -138,6 +138,7 @@ public class Ohjelma {
 			break;
 		default: 
 			System.out.println("Et valinnut oikeaa numeroa!");
+			kaynnista(nimi);
 			break;
 		}
 		s.close();
