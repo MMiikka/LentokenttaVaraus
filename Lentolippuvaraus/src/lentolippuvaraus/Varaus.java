@@ -11,6 +11,9 @@ public class Varaus{
 /**
  * Varaus-luokassa luodaan varaus, jonka tietoihin kuuluu: Lentokone-olio, maa, asiakas-olio, ID ja paikka.
  */
+	private File f = new File("varaus.txt");
+	
+	
 	private Lentokone lentokone;
 	private Maat maa;
 	private Asiakas asiakas;
@@ -93,6 +96,12 @@ public class Varaus{
 		return p;
 	}
 	
+	public void poistaVaraus() throws IOException {
+		FileWriter fw = new FileWriter(f);
+		fw.nullWriter();
+		fw.flush();
+		fw.close();
+	}
 
 	
 	/**

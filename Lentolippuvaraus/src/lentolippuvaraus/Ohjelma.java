@@ -9,6 +9,8 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  * 
  * @author jonmer
@@ -24,6 +26,7 @@ public class Ohjelma {
 	 */
 	public void paavalikko() {
 		boolean onNimi= false;
+		
 		do {
 		File f =  new File("varaus.txt");
 		Scanner s = new Scanner(System.in);
@@ -37,8 +40,9 @@ public class Ohjelma {
 			System.out.println("Hei, " + nimi.annaNimi()+ "! Asiakas ID:si on: " + nimi.annaID());
 			onNimi = true;
 			System.out.println();
+			
 			System.out.println("Haluatko tarkastella varauksiasi (0) vai luoda uuden varauksen? (1)");
-
+			
 		try {
 			if(s.nextInt() == 0) {
 				List<String> varaukset = tarkistaVaraus(f,nimi.annaID());
@@ -55,15 +59,17 @@ public class Ohjelma {
 		}else{ 
 			kaynnista(nimi);
 		}
-		} catch(Exception e) {
-			e.printStackTrace();
+		} catch(InputMismatchException e) {
+			//e.printStackTrace();
+			System.out.println("Sinun pitää valita oikea numero! \n Ohjelma palautuu alkutilaansa." );
+			paavalikko();
 		}
 		
 		s.close();
 		
 		}catch(Exception e) {
 			
-			System.err.println("Kirjoita sekä etunimi ja sukunimi");
+			System.err.println("Kirjoita sekä etunimi ja sukunimi. Käytäthän vain kirjaimia!");
 			onNimi = false;
 		}
 		}while(onNimi == false);
@@ -203,7 +209,7 @@ public class Ohjelma {
 							}
 							s.close();
 							
-							System.out.println("Varasit paikan " + (paikka + 1) + " koneeseen, joka lähtee tänään kohteeseen: " + kone.annaMaa());
+							System.out.println("Varasit paikan " + (paikka + 1) + " koneeseen, joka lähtee tänään kohteeseen: " + kone.annaMaa() + "\n \n Tässä vielä varauksesi tiedot: " + v.toString()) ;
 							paikanVaraus = true;
 							
 					}else {
@@ -221,7 +227,7 @@ public class Ohjelma {
 				}while(paikanVaraus == false);
 					
 				
-				System.out.println("Tässä vielä vapaat paikat, kiitos varauksestasi!");
+				System.out.println("\n Tässä vielä vapaat paikat, kiitos varauksestasi!");
 				for(int i = 0; i< kone.annaPaikat().size();i++) {
 					if(i == 2 || i == 6 || i == 10 || i == 14 || i== 18) {
 						System.out.print("  ");
@@ -236,6 +242,8 @@ public class Ohjelma {
 					System.out.print(",");
 				}
 				
+				
+
 			
 				}
 		
@@ -245,10 +253,11 @@ public class Ohjelma {
 		}
 /**
  * Valikko-metodilla tehdään valinta uuden varauksen teosta ko. asiakkaalle.
+ * Voit myös valita ohjelman päättymisen tai poistaa aikaisemman varauksen. Tämä tyhjentää varaus-tiedoston.
  * @param asiakas
  */
 	public void valikko(Asiakas asiakas) {
-			System.out.println("Haluatko jatkaa varauksen tekoon? 1: kyllä, 0: Ei(ohjelma päättyy");
+			System.out.println("Haluatko jatkaa varauksen tekoon? 1: kyllä, 0: Ei(ohjelma päättyy) Voit myös poistaa varauksen kirjoittamalla 'poista'");
 		
 			
 			Scanner s = new Scanner(System.in);
@@ -261,9 +270,20 @@ public class Ohjelma {
 			case "0":
 				System.out.println("Kiitos, ja hei!");
 				break;
+			case "poista":
+				try {
+					new Varaus().poistaVaraus();
+					System.out.println("Varauksen poisto onnistui!");
+					valikko(asiakas);
+				} catch (IOException e) {
+					System.err.println("Varauksen poisto epäonnistui!");
+					e.printStackTrace();
+				}
+				break;
+				
 				default:
 					System.out.println("Et valinnut kunnon arvoa!");
-					paavalikko();
+					valikko(asiakas);
 			}
 		}
 	
@@ -289,6 +309,12 @@ public class Ohjelma {
 		lista.add(arvo[0]);
 		}
 		String nimi = s.nextLine();
+		Pattern p = Pattern.compile("[^a-zA-Z- ]");
+		Matcher m = p.matcher(nimi);
+		boolean eiKunnollinen = m.find();
+		
+		
+		
 		String[] kokoNimi = nimi.split(" ");
 		Asiakas asiakas = new Asiakas(kokoNimi[0], kokoNimi[1]);
 		if(lista.isEmpty()) {
@@ -297,8 +323,13 @@ public class Ohjelma {
 			asiakas.asetaID(lista.get(lista.size()-1));
 		}
 		
-		
+		if(!eiKunnollinen) {
 	return asiakas;
+		}
+		else {
+			Asiakas a = null;
+			return a;
+		}
 }
 	/**
 	 * Metodi tarkistaa varauksen ohjelman alussa.
