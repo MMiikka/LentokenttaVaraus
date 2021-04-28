@@ -79,7 +79,7 @@ public class Ohjelma {
 	 * Ohjelma käynnistetään vasta kun asiakas-olio on luotu käyttäjän syötteestä.
 	 * Tämän hetkisessä versiossa myös mahdolliset lentokoneet tuodaan ohjelmaan tässä vaiheessa.
 	 * Metodin tarkoituksena, on mahdollistaa paikan varaus lentokoneista.
-	 * @param nimi
+	 * @param nimi, asiakkaan eli tässä tapauksessa käyttäjän nimi
 	 */
 	public void kaynnista(Asiakas nimi) {
 		
@@ -254,7 +254,7 @@ public class Ohjelma {
 /**
  * Valikko-metodilla tehdään valinta uuden varauksen teosta ko. asiakkaalle.
  * Voit myös valita ohjelman päättymisen tai poistaa aikaisemman varauksen. Tämä tyhjentää varaus-tiedoston.
- * @param asiakas
+ * @param asiakas, asiakkaan eli tässä tapauksessa käyttäjän nimi
  */
 	public void valikko(Asiakas asiakas) {
 			System.out.println("Haluatko jatkaa varauksen tekoon? 1: kyllä, 0: Ei(ohjelma päättyy) Voit myös poistaa varauksen kirjoittamalla 'poista'");
@@ -291,9 +291,10 @@ public class Ohjelma {
  * luoAsiakas() metodissa luodaan asiakas käyttäjän antamasta nimi-syötteestä.
  * Metodin aikana myös annetaan asiakkaalle ID, sen perusteella onko asiakkaalla aijempaa varausta.
  * Jos varaus löytyy annetaan asiakkaalle se ID, joka varauksessa on. Muutoin asiakkaalle luodaan uusi ID.
+ * Metodi tarkistaa myös nimen kirjoitusasun, ja pitää huolen, että se on oikein.
  * @param s	parametrina on käyttäjän syöte.
  * @return Palauttaa asiakas olion.
- * @throws IOException
+ * @throws IOException, jos nimen luonti epäonnistuu
  */
 	public Asiakas luoAsiakas(Scanner s) throws IOException {
 		File f = new File("varaus.txt");
@@ -334,9 +335,9 @@ public class Ohjelma {
 	/**
 	 * Metodi tarkistaa varauksen ohjelman alussa.
 	 * @param f Tiedosto, jossa varaus on
-	 * @param id 
+	 * @param id, varauksen id merkkijonona
 	 * @return Palauttaa listan varauksen sisältämistä asioista merkkijonoina.
-	 * @throws IOException
+	 * @throws IOException, jos tiedoston luku epäonnistuu
 	 */
 	
 	public List<String> tarkistaVaraus(File f,String id) throws IOException {
@@ -353,8 +354,8 @@ public class Ohjelma {
 	}
 	/**
 	 * Kirjoittaa uuden tekstitiedoston, joka sisältää asiakkaan varauksen. Metodin parametriksi annetaan luotu varaus-olio.
-	 * @param varaus
-	 * @throws IOException
+	 * @param varaus, varausjärjestelmän varaus-olio
+	 * @throws IOException, jos tiedoston kirjoitus epäonnistuu
 	 */
 	public void kirjoitaTiedosto(Varaus varaus) throws IOException {
 		 File f = new File("varaus.txt");

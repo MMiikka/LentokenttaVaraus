@@ -36,7 +36,7 @@ public class Lentokone {
 	}
 	/**
 	 * Palauttaa Maan.
-	 * @return Maat maa
+	 * @return Maat maa, maa johon kone lentää
 	 */
 	public Maat annaMaa() {
 		return maa;

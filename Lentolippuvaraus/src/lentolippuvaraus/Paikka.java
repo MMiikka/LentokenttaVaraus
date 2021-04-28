@@ -11,7 +11,7 @@ public class Paikka {
 	/**
 	 * Paikka-luokan konstruktori.
 	 * @param vapaa,	jos paikka on vapaa asetetaan arvoksi true
-	 * @param numero	paikan numero koneessa.
+	 * @param numero,	paikan numero koneessa.
 	 */
 	public Paikka(boolean vapaa, int numero) {
 		this.vapaa = vapaa;

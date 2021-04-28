@@ -27,10 +27,10 @@ public class Varaus{
 	}
 	/**
 	 * Varaus-olion konstruktori.
-	 * @param asiakas 
-	 * @param paikka
-	 * @param lentokone
-	 * @param maa
+	 * @param asiakas, Käyttäjästä luotu olio.
+	 * @param paikka, Varauksen Paikka-olio lentokoneesta.
+	 * @param lentokone, Lentokone, johon varaus sisältyy.
+	 * @param maa, Maa johon lentokone lentää.
 	 */
 	public Varaus(Asiakas asiakas, Paikka paikka, Lentokone lentokone, Maat maa) {
 		this.asiakas = asiakas;
@@ -41,14 +41,14 @@ public class Varaus{
 	}
 	/**
 	 * Asettaa varaukselle ID:n
-	 * @param id
+	 * @param id, Varauksen ID.
 	 */
 	public void asetaVarauksenID(String id) {
 		this.id = id;
 	}
 	/**
 	 * Palauttaa tietyn asiakkaan ID:n varauksesta
-	 * @param asiakas
+	 * @param asiakas, Käyttäjästä luotu olio
 	 * @return ID, merkkijonona
 	 */
 	public String annaVarauksenID(Asiakas asiakas) {
@@ -59,8 +59,8 @@ public class Varaus{
 	/**
 	 * Metodi, joka helpottaa varauksen perusteella kyseisen koneen tunnistamista
 	 * @param f tiedosto, josta varaus luetaan
-	 * @return paluattaa koneen mallin merkkijonona
-	 * @throws Exception
+	 * @return palauttaa koneen mallin merkkijonona
+	 * @throws Exception, jos tiedoston luku epäonnistuu
 	 */
 	public String[] lueVarauksenTiedot(File f) throws Exception{
 		List<String> varaus = new ArrayList<>();
@@ -76,7 +76,7 @@ public class Varaus{
 	 * Metodi, jolla luetaan vanhoista varauksista paikat koneeseen.
 	 * @param f	tiedosto, josta varaus luetaan
 	 * @return Asiakas, palauttaa asiakkaan joka asetataan koneeseen.
-	 * @throws Exception
+	 * @throws Exception, jos tiedoston luku epäonnistuu
 	 */
 	public Paikka lueVarausTiedostosta(File f,Asiakas a, int numero) throws Exception {
 		List<String> varaus = new ArrayList<>();
@@ -95,7 +95,10 @@ public class Varaus{
 	
 		return p;
 	}
-	
+	/**
+	 * Metodin avulla poistetaan aikaisempi varaus. Tämä metodi tyhjentää ohjelman mukana tulevan varaus.txt-tiedoston.
+	 * @throws IOException Jos varaus epäonnistuu
+	 */
 	public void poistaVaraus() throws IOException {
 		FileWriter fw = new FileWriter(f);
 		fw.nullWriter();
