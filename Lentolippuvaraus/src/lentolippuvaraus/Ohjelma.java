@@ -294,7 +294,7 @@ public class Ohjelma {
  * Metodi tarkistaa myös nimen kirjoitusasun, ja pitää huolen, että se on oikein.
  * @param s	parametrina on käyttäjän syöte.
  * @return Palauttaa asiakas olion.
- * @throws IOException, jos nimen luonti epäonnistuu
+ * @throws IOException , jos nimen luonti epäonnistuu
  */
 	public Asiakas luoAsiakas(Scanner s) throws IOException {
 		File f = new File("varaus.txt");
@@ -337,7 +337,7 @@ public class Ohjelma {
 	 * @param f Tiedosto, jossa varaus on
 	 * @param id, varauksen id merkkijonona
 	 * @return Palauttaa listan varauksen sisältämistä asioista merkkijonoina.
-	 * @throws IOException, jos tiedoston luku epäonnistuu
+	 * @throws IOException , jos tiedoston luku epäonnistuu
 	 */
 	
 	public List<String> tarkistaVaraus(File f,String id) throws IOException {
@@ -355,7 +355,7 @@ public class Ohjelma {
 	/**
 	 * Kirjoittaa uuden tekstitiedoston, joka sisältää asiakkaan varauksen. Metodin parametriksi annetaan luotu varaus-olio.
 	 * @param varaus, varausjärjestelmän varaus-olio
-	 * @throws IOException, jos tiedoston kirjoitus epäonnistuu
+	 * @throws IOException , jos tiedoston kirjoitus epäonnistuu
 	 */
 	public void kirjoitaTiedosto(Varaus varaus) throws IOException {
 		 File f = new File("varaus.txt");
